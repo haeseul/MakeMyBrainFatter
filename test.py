@@ -15,71 +15,86 @@ class Tensor():
         self.tensor = Tensor.shape_data(self)
 
     def shape_data(self):
-        m = 0
-        if self.shape == []:
-            return []
+      m = 0
+      if self.shape == []:
+        return []
 
-        ## Tensor
-        elif len(self.shape) == 3:
-            self.tensor = [[[0 for k in range(self.shape[2])] for j in range(self.shape[1])] for i in range(self.shape[0])]
-            if self.data == []:
-            return self.tensor
-            else:
-            for i in range(len(self.tensor)):
-                for j in range(len(self.tensor[i])):
-                for k in range(len(self.tensor[i][j])):
-                    self.tensor[i][j][k] = self.data[m]
-                    m += 1
-            return self.tensor
-
-        ## Matrix
-        elif len(self.shape) == 2:
-            self.tensor = [[0 for k in range(self.shape[1])] for j in range(self.shape[0])]
-            if self.data == []:
-            return self.tensor
-            else:
-            for i in range(len(self.tensor)):
-                for j in range(len(self.tensor[i])):
-                self.tensor[i][j] = self.data[m]
-                m += 1
-            return self.tensor
-
-        elif len(self.shape) == 1:
-            ## Vector
-            if self.shape != [1]:
-            self.tensor = [0 for k in range(self.shape[0])]
-            if self.data == []:
+      ## Tensor
+      elif len(self.shape) == 3:
+        self.tensor = [[[0 for k in range(self.shape[2])] for j in range(self.shape[1])] for i in range(self.shape[0])]
+        for i in range(len(self.tensor)):
+          for j in range(len(self.tensor[i])):
+            for k in range(len(self.tensor[i][j])):
+              if m >= len(self.data):
                 return self.tensor
-            else:
-                for i in range(len(self.tensor)):
-                self.tensor[i] = self.data[m]
+              else:
+                self.tensor[i][j][k] = self.data[m]
                 m += 1
-                return self.tensor
+        return self.tensor
 
-            ## Scalar
+      ## Matrix
+      elif len(self.shape) == 2:
+        self.tensor = [[0 for k in range(self.shape[1])] for j in range(self.shape[0])]
+        for i in range(len(self.tensor)):
+          for j in range(len(self.tensor[i])):
+            if m >= len(self.data):
+              return self.tensor
             else:
-            if self.data == []:
-                return 0
-            else:
-                return self.data[0]
+              self.tensor[i][j] = self.data[m]
+              m += 1
+        return self.tensor
 
+      elif len(self.shape) == 1:
+        ## Vector
+        if self.shape != [1]:
+          self.tensor = [0 for k in range(self.shape[0])]
+          for i in range(len(self.tensor)):
+            if m >= len(self.data):
+              return self.tensor
+            else:
+              self.tensor[i] = self.data[m]
+              m += 1
+          return self.tensor
+
+        ## Scalar
         else:
-            raise ValueError
+          if self.data == []:
+            return 0
+          else:
+            return self.data[0]
+
+      else:
+        raise ValueError
 
 
 
->>> data0 = [0, 1, 2, 3, 4, 5, 0.1, 0.2, -3]
->>> shape0 = [2, 3, 2]
->>> tensor0 = Tensor(data0, shape0)
+# >>> data0 = [0, 1, 2, 3, 4, 5, 0.1, 0.2, -3]
+# >>> shape0 = [2, 3, 2]
+# >>> tensor0 = Tensor(data0, shape0)
 
-output:
-[[[0, 1], [2, 3], [4, 5]], [[0.1, 0.2], [-3, 0], [0, 0]]]
+# output:
+# [[[0, 1], [2, 3], [4, 5]], [[0.1, 0.2], [-3, 0], [0, 0]]]
 
 
->>> data1 = [0, 1, 2, 3, 4, 5, 0.1, 0.2, -3, -2, -1, 3, 2, 1]
->>> shape1 = [5, 2]
->>> tensor1 = Tensor(data1, shape1)
+# >>> data1 = [0, 1, 2, 3, 4, 5, 0.1, 0.2, -3, -2, -1, 3, 2, 1]
+# >>> shape1 = [5, 2]
+# >>> tensor1 = Tensor(data1, shape1)
 
-output:
-[[0, 1], [2, 3], [4, 5], [0.1, 0.2], [-3, -2]]
+# output:
+# [[0, 1], [2, 3], [4, 5], [0.1, 0.2], [-3, -2]]
 
+
+
+# data0 = []
+# data1 = [8]
+# data14 = [100, 1, 2, 3, 4, 5, 0.1, 0.2, -3, -2, -1, 3, 2, 1]
+
+# shape_tensor = [4, 2, 3]
+# shape_matrix = [3, 5]
+# shape_vector = [4]
+# shape_scalar = [1]
+# shape_empty = []
+# shape_over = [5, 4, 3, 2]
+
+# T = Tensor(data1, [2,3,4,5])
+# T.tensor
