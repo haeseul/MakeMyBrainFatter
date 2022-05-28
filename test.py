@@ -63,6 +63,8 @@ class Tensor():
           else:
             return self.data[0]
 
+    # 텐서는 3차원 이상의 n-dimensional한 자료구조이다. 쉐입이 3개 이상 나올 수 있음
+    # 다시 시도!
       else:
         raise ValueError
 
