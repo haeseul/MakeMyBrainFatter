@@ -22,7 +22,21 @@ class MaxHeap:
         self.upHeap()
 
     def downHeap(self):
-        pass
+        item = self.heap[1]
+        parent = 1
+        child = 2
+
+        # 비교할 자식 노드가 없어질 떄까지
+        while child <= self.heapSize:
+            # 오른쪽 노드가 있다면 왼쪽(child), 오른쪽(child+1) 먼저 비교
+            if child < self.heapSize and self.heap[child+1] > self.heap[child]:
+                child += 1
+            if item >= self.heap[child]:
+                break
+            self.heap[parent] = self.heap[child]
+            parent = child
+            child *= 2      # 자식의 왼쪽 노드로 이동
+        self.heap[parent] = item
 
     def deleteItem(self):
         item = self.heap[1]     # 삭제대상 : root
