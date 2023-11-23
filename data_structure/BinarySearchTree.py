@@ -23,6 +23,24 @@ def max_key_node(root):
         root = root.right
     return root
 
+def deleteNode(root, key):
+    if root is None:
+        return None
+    if key < root.key:
+        root.left = deleteNode(root.left, key)
+    elif key > root.key:
+        root.right = deleteNode(root.right, key)
+    else:   # 삭제할 key를 찾은 경우
+        if root.left is None:
+            return root.right
+        elif root.right is None:
+            return root.left
+        else:
+            succ = min_key_node(root.right)
+            root.key = succ.key
+            root.right = deleteNode(root.right, succ.key)
+    return root
+
 def in_order(root):
     if root:
         in_order(root.left)
@@ -44,3 +62,10 @@ if __name__ == '__main__':
 
     print('\nmax key : %d' % max_key_node(root).key)
     print('min key : %d' % min_key_node(root).key)
+
+    # root = deleteNode(root, 30)
+    # display(root, '[Delete 30:] ')
+    # root = deleteNode(root, 26)
+    # display(root, '[Delete 26:] ')
+    root = deleteNode(root, 18)
+    display(root, '[Delete 18:] ')
