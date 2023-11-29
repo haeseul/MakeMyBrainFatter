@@ -26,6 +26,12 @@ def rotateRight(p):     # parent
     c.right = p         # child의 right -> p
     return c            # 새로운 root = c
 
+def rotateLeft(p):
+    c = p.right
+    p.right = c.left
+    c.left = p
+    return c
+
 def insert(root, key):
     if root is None:
         return TreeNode(key)
@@ -40,8 +46,17 @@ def insert(root, key):
     if balance > 1 and key < root.left.key:
         return rotateRight(root)
     # LR
+    if balance > 1 and key > root.left.key:
+        root.left = rotateLeft(root.left)
+        return rotateRight(root)
     # RR
+    if balance < -1 and key > root.right.key:
+        return rotateLeft(root)
     # RL
+    if balance < -1 and key < root.right.key:
+        root.right = rotateRight(root.right)
+        return rotateLeft(root)
+
     return root
 
 def in_order(root):
@@ -58,7 +73,7 @@ def display(root, msg):
 if __name__ == '__main__':
     root = None
     # keys = [7, 8, 9, 2, 1, 5, 3, 6, 4]
-    keys = [5,3,1]
+    keys = [5,3,1,7,10,8, 9]
     for key in keys:
         root = insert(root, key)
         display(root, '[Insert %2d] ' % key)
